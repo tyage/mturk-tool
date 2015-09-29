@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/tyage/mturk-tool/issues"
   },
-  "homepage": "https://github.com/tyage/mturk-tool#readme"
+  "homepage": "https://github.com/tyage/mturk-tool#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^0.33.3"
+  }
 }
