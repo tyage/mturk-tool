@@ -16,7 +16,9 @@
     "url": "https://github.com/tyage/mturk-tool/issues"
   },
   "homepage": "https://github.com/tyage/mturk-tool#readme",
-  "devDependencies": {
-    "electron-prebuilt": "^0.33.3"
+  "dependencies": {
+    "babel": "^5.8.23",
+    "electron-prebuilt": "^0.33.3",
+    "react": "^0.13.3"
   }
 }
