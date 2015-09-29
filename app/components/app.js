@@ -1,8 +1,13 @@
 import React from 'react';
+import Config from './config';
 
 class App extends React.Component {
   render() {
-    return <div>This is React component</div>
+    return (
+      <div>
+        <Config></Config>
+      </div>
+    );
   }
 }
 
