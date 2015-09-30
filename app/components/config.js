@@ -1,5 +1,6 @@
 import React from 'react';
 
+// TODO: Set keys to localstorage
 export default class Config extends React.Component {
   render() {
     return (
