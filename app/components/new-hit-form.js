@@ -10,7 +10,7 @@ export default class NewHITForm extends React.Component {
     };
   }
   onSubmit() {
-    MTurk.createHIT(this.state.hitTemplate, []);
+    MTurk.createHIT(this.state.hitTemplate);
   }
   hitTemplateChange(e) {
     this.setState({
