@@ -26,7 +26,7 @@ export default class NewHITForm extends React.Component {
       <div id="new-hit-form">
         <div>
           <label>New HIT Template</label>
-          <textarea onChange={this.hitTemplateChange.bind(this)}>{sampleTemplate}</textarea>
+          <textarea onChange={this.hitTemplateChange.bind(this)} defaultValue={sampleTemplate}></textarea>
         </div>
         <div>
           <input type="submit" value="Create New HIT" onClick={this.onSubmit.bind(this)} />

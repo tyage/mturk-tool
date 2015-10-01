@@ -1,5 +1,7 @@
 'use strict';
 
+require('electron-compile').init();
+
 var app = require('app');
 var BrowserWindow = require('browser-window');
 
