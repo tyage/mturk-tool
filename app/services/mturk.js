@@ -47,8 +47,44 @@ class MTurk {
     }, params));
   }
 
-  waitHIT(hitId) {
+  getAssignmentsForHIT(hitId, params = {}) {
+    return this.request(Object.assign({
+      Operation: 'GetAssignmentsForHIT',
+      HITId: hitId,
+      PageSize: 100, // TODO: this is sample,
+      PageNumber: 1 // TODO: this is sample
+    }, params));
+  }
 
+  getAllAssignmentsForHIT(hitId, params = {}) {
+    return this.getAssignmentsForHIT(hitId); // TODO: get truely all assignments
+  }
+
+  waitHIT(hitId) {
+    let waitSecound = 60 * 1000;
+    let isHITDone = (hit, assignments) => {
+      let status = hit.querySelector('HITStatus').textContent;
+      let maxAssignments = +hit.querySelector('maxAssignments').textContent;
+      let assignmentsLength = assignments.querySelectorAll('Assignment').length;
+      return status === 'Reviewable' && maxAssignments === assignmentsLength;
+    };
+    let waitHIT = resolve => {
+      Promise.all([
+        this.getHIT(hitId),
+        this.getAllAssignmentsForHIT(hitId)
+      ]).then(values => {
+        let [hit, assignments] = values;
+        if (isHITDone(hit, assignments)) {
+          resolve(hit);
+        } else {
+          window.setTimeout(() => waitHIT(resolve), waitSecound);
+        }
+      });
+    };
+
+    return new Promise((resolve, reject) => {
+      waitHIT(resolve);
+    });
   }
 };
 

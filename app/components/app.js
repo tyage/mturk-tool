@@ -5,8 +5,8 @@ import MTurk from '../services/mturk';
 
 class App extends React.Component {
   onHITCreate(hitId) {
-    MTurk.getHIT(hitId).then(doc => {
-      console.log(doc);
+    MTurk.waitHIT(hitId).then(hit => {
+      console.log(hit)
     });
   }
   render() {
