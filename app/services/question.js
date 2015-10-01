@@ -1,3 +1,8 @@
+import fs from 'fs';
+
+let appJS = fs.readFileSync(__dirname + '/../resources/app.js');
+let appCSS = fs.readFileSync(__dirname + '/../resources/app.css');
+
 let questionTemplate = (content, frameHeight) => {
   return `
 <HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
@@ -7,6 +12,7 @@ let questionTemplate = (content, frameHeight) => {
 `
 };
 
+// XXX: escaping html is not needed
 let HITPageTemplate = (content, questions) => {
   return `
 <!DOCTYPE html>
@@ -14,25 +20,32 @@ let HITPageTemplate = (content, questions) => {
   <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <script src='//s3.amazonaws.com/mturk-public/externalHIT_v1.js'></script>
+    <script src='//code.jquery.com/jquery-2.1.4.min.js'></script>
+
+    <style type="text/css">${appCSS}</style>
   </head>
   <body>
+
     <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
       <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
 
-      <div id="choices">
-        ${questions.map((q) => `<div data-id="${q.id}" class="choice">${q.choiceHTML}</div>`)}
+      <div id="src-question-choices">
+        ${questions.map((q) => `<div data-id="${q.id}" class="choice">${q.choiceHTML}</div>`).join('')}
+      </div>
+      <input value="" name="selected-question" id="selected-question" type="hidden" />
+
+      <div id="src-question-contents">
+        ${questions.map((q) => `<div data-id="${q.id}" class="content">${q.contentHTML}</div>`).join('')}
       </div>
 
       <div id="contents">
-        ${questions.map((q) => `<div data-id="${q.id}" class="content">${q.contentHTML}</div>`)}
+        ${content}
       </div>
-
-      ${content}
 
       <p><input type='submit' id='submitButton' value='Submit' /></p>
     </form>
 
-    <script>turkSetAssignmentID()</script>
+    <script>${appJS}</script>
   </body>
 </html>
 `

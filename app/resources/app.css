@@ -1,0 +1,11 @@
+#src-question-contents {
+  display: none;
+}
+#question-choices img {
+  width: 100px;
+  height: 100px;
+}
+#question-content img {
+  width: 200px;
+  height: 200px;
+}
