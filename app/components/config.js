@@ -3,6 +3,14 @@ import ConfigService from '../services/config';
 
 // TODO: Set keys to localstorage
 export default class Config extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      AWSAccessKeyId: ConfigService.get('AWSAccessKeyId'),
+      AWSSecretAccessKey: ConfigService.get('AWSSecretAccessKey')
+    };
+  }
   onAccessKeyIdChange(e) {
     ConfigService.set('AWSAccessKeyId', e.target.value);
   }
@@ -12,10 +20,17 @@ export default class Config extends React.Component {
   render() {
     return (
       <div id="config">
-        <input type="text" id="config-aws-access-key-id" placeholder="AWS Access Key ID"
-          onChange={this.onAccessKeyIdChange.bind(this)} />
-        <input type="text" id="config-aws-secret-access-key" placeholder="AWS Secret Access Key"
-          onChange={this.onSecretAccessKeyChange.bind(this)} />
+        <label>
+          <span>AWS Access Key ID:&nbsp;</span>
+          <input type="text" id="config-aws-access-key-id" placeholder="AWS Access Key ID"
+          onChange={this.onAccessKeyIdChange.bind(this)} value={this.state.AWSAccessKeyId} />
+        </label>
+        <br />
+        <label>
+          <span>AWS Secret Access Key:&nbsp;</span>
+          <input type="text" id="config-aws-secret-access-key" placeholder="AWS Secret Access Key"
+            onChange={this.onSecretAccessKeyChange.bind(this)} value={this.state.AWSSecretAccessKey} />
+        </label>
       </div>
     );
   }
