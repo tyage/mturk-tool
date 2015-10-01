@@ -21,7 +21,9 @@ class MTurk {
       Config.get('AWSSecretAccessKey'));
     let param = Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
 
-    return fetch(`${endpoint}/?${param}`, {});
+    return fetch(`${endpoint}/?${param}`, {})
+      .then(res => res.text())
+      .then(text => (new DOMParser()).parseFromString(text, 'text/xml'));
   }
 
   createHIT(template, questions, params = {}) {
@@ -36,6 +38,17 @@ class MTurk {
       'Reward.1.Amount': 0.32, // TODO: this is sample
       'Reward.1.CurrencyCode': 'USD' // TODO: this is sample
     }), params);
+  }
+
+  getHIT(hitId, params = {}) {
+    return this.request(Object.assign({
+      Operation: 'GetHIT',
+      HITId: hitId
+    }, params));
+  }
+
+  waitHIT(hitId) {
+
   }
 };
 

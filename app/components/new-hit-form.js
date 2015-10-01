@@ -11,17 +11,22 @@ export default class NewHITForm extends React.Component {
 
     this.state = {
       hitTemplate: sampleTemplate,
-      hitId: null
+      hitId: null,
+      isCreatingHIT: false
     };
   }
   onSubmit() {
-    MTurk.createHIT(this.state.hitTemplate, sampleQuestions).then(res => {
-      res.text().then(text => {
-        let doc = (new DOMParser()).parseFromString(text, 'text/xml');
-        this.setState({
-          hitId: doc.querySelector('HITId').textContent
-        });
-      })
+    this.setState({
+      isCreatingHIT: true
+    });
+
+    MTurk.createHIT(this.state.hitTemplate, sampleQuestions).then(doc => {
+      let hitId = doc.querySelector('HITId').textContent;
+      this.setState({
+        hitId: hitId,
+        isCreatingHIT: false
+      });
+      this.props.onHITCreate(hitId);
     });
   }
   hitTemplateChange(e) {
@@ -40,7 +45,8 @@ export default class NewHITForm extends React.Component {
         </div>
         <div className="form-section">
           <label></label>
-          <input type="submit" value="Create New HIT" onClick={this.onSubmit.bind(this)} />
+          <input type="submit" value="Create New HIT" onClick={this.onSubmit.bind(this)}
+            disabled={this.state.isCreatingHIT || this.state.isWaitingForHIT} />
         </div>
         { this.state.hitId && <p><a href={url}>{url}</a></p> }
       </div>
