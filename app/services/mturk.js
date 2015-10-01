@@ -31,7 +31,7 @@ class MTurk {
       Operation: 'CreateHIT',
       Question: Question.createQuestion(template, questions),
       MaxAssignments: 1,
-      Title: 'sample HIT', // TODO: this is sample
+      Title: 'sample HIT ' + new Date(), // TODO: this is sample
       Description: 'sample desc', // TODO: this is sample
       AssignmentDurationInSeconds: 30, // TODO: this is sample
       LifetimeInSeconds: 604800, // TODO: this is sample
