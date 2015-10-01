@@ -23,12 +23,12 @@ export default class Config extends React.Component {
         <div className="form-section">
           <label>AWS Access Key ID</label>
           <input type="text" id="config-aws-access-key-id" placeholder="AWS Access Key ID"
-          onChange={this.onAccessKeyIdChange.bind(this)} value={this.state.AWSAccessKeyId} />
+          onChange={this.onAccessKeyIdChange.bind(this)} defaultValue={this.state.AWSAccessKeyId} />
         </div>
         <div className="form-section">
           <label>AWS Secret Access Key</label>
           <input type="text" id="config-aws-secret-access-key" placeholder="AWS Secret Access Key"
-            onChange={this.onSecretAccessKeyChange.bind(this)} value={this.state.AWSSecretAccessKey} />
+            onChange={this.onSecretAccessKeyChange.bind(this)} defaultValue={this.state.AWSSecretAccessKey} />
         </div>
       </div>
     );
