@@ -1,6 +1,6 @@
-$(function() {
-  turkSetAssignmentID();
+turkSetAssignmentID();
 
+$(function() {
   var srcQuestionChoices = $('#src-question-choices');
   var srcQuestionContents = $('#src-question-contents');
   var destQuestionChoices = $('#question-choices');
