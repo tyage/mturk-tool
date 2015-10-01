@@ -29,13 +29,13 @@ export default class NewHITForm extends React.Component {
       isWaitingForHIT: true
     });
 
-    MTurk.waitHIT(hitId).then((hit, assignments) => {
+    MTurk.waitHIT(hitId).then(([hit, assignments]) => {
       let answer = parseXML(assignments.querySelector('Answer').textContent);
       let selectedQuestion = Array.from(answer.querySelectorAll('Answer')).find(a => {
         return a.querySelector('QuestionIdentifier').textContent === 'selected-question';
       }).querySelector('FreeText').textContent;
       let newHITQuestions = this.state.hitQuestions.filter(q => {
-        return q.id.toString() !== selected-question;
+        return q.id.toString() !== selectedQuestion;
       });
 
       this.setState({
@@ -43,11 +43,15 @@ export default class NewHITForm extends React.Component {
         hitQuestions: newHITQuestions
       });
 
-      createHIT();
+      this.createHIT();
     });
   }
 
   createHIT() {
+    if (this.state.hitQuestions.length === 0) {
+      return;
+    }
+
     this.setState({
       isCreatingHIT: true
     });

@@ -62,7 +62,7 @@ class MTurk {
   }
 
   waitHIT(hitId) {
-    let waitSecound = 60 * 1000;
+    let waitSecound = 30 * 1000;
     let isHITDone = (hit, assignments) => {
       let status = hit.querySelector('HITStatus').textContent;
       let maxAssignments = +hit.querySelector('MaxAssignments').textContent;
@@ -73,10 +73,9 @@ class MTurk {
       Promise.all([
         this.getHIT(hitId),
         this.getAllAssignmentsForHIT(hitId)
-      ]).then(values => {
-        let [hit, assignments] = values;
+      ]).then(([hit, assignments]) => {
         if (isHITDone(hit, assignments)) {
-          resolve(hit, assignments);
+          resolve([hit, assignments]);
         } else {
           window.setTimeout(() => waitHIT(resolve), waitSecound);
         }
