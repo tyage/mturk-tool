@@ -10,11 +10,19 @@ export default class NewHITForm extends React.Component {
     super(props);
 
     this.state = {
-      hitTemplate: null
+      hitTemplate: sampleTemplate,
+      hitId: null
     };
   }
   onSubmit() {
-    MTurk.createHIT(this.state.hitTemplate, sampleQuestions);
+    MTurk.createHIT(this.state.hitTemplate, sampleQuestions).then(res => {
+      res.text().then(text => {
+        let doc = (new DOMParser()).parseFromString(text, 'text/xml');
+        this.setState({
+          hitId: doc.querySelector('HITId').textContent
+        });
+      })
+    });
   }
   hitTemplateChange(e) {
     this.setState({
@@ -22,17 +30,19 @@ export default class NewHITForm extends React.Component {
     });
   }
   render() {
+    let url = `https://workersandbox.mturkcontent.com/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${this.state.hitId}`;
     return (
       <div id="new-hit-form">
         <h2>Create New HIT</h2>
         <div className="form-section">
           <label>New HIT Template</label>
-          <textarea id="new-hit-template" onChange={this.hitTemplateChange.bind(this)} defaultValue={sampleTemplate}></textarea>
+          <textarea id="new-hit-template" onChange={this.hitTemplateChange.bind(this)} defaultValue={this.state.hitTemplate}></textarea>
         </div>
         <div className="form-section">
           <label></label>
           <input type="submit" value="Create New HIT" onClick={this.onSubmit.bind(this)} />
         </div>
+        { this.state.hitId && <p><a href={url}>{url}</a></p> }
       </div>
     );
   }
