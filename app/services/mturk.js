@@ -64,7 +64,7 @@ class MTurk {
     let waitSecound = 60 * 1000;
     let isHITDone = (hit, assignments) => {
       let status = hit.querySelector('HITStatus').textContent;
-      let maxAssignments = +hit.querySelector('maxAssignments').textContent;
+      let maxAssignments = +hit.querySelector('MaxAssignments').textContent;
       let assignmentsLength = assignments.querySelectorAll('Assignment').length;
       return status === 'Reviewable' && maxAssignments === assignmentsLength;
     };
