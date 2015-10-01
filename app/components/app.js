@@ -10,8 +10,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Config></Config>
-        <NewHITForm></NewHITForm>
+        <Config />
+        <NewHITForm />
       </div>
     );
   }

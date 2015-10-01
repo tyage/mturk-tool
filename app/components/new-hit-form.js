@@ -1,6 +1,7 @@
 import React from 'react';
 import MTurk from '../services/mturk';
 import parseXML from '../libs/parse-xml';
+import HITHistory from './hit-history';
 import fs from 'fs';
 
 import sampleQuestions from '../resources/sample-questions';
@@ -13,7 +14,7 @@ export default class NewHITForm extends React.Component {
     this.state = {
       hitTemplate: sampleTemplate,
       hitQuestions: sampleQuestions,
-      hitId: null,
+      hitHistory: [],
       isCreatingHIT: false,
       isWaitingForHIT: false
     };
@@ -41,6 +42,8 @@ export default class NewHITForm extends React.Component {
         isWaitingForHIT: false,
         hitQuestions: newHITQuestions
       });
+
+      createHIT();
     });
   }
 
@@ -52,10 +55,10 @@ export default class NewHITForm extends React.Component {
     MTurk.createHIT(this.state.hitTemplate, this.state.hitQuestions).then(doc => {
       let hitId = doc.querySelector('HITId').textContent;
       this.setState({
-        hitId: hitId,
+        hitHistory: [...this.state.hitHistory, hitId],
         isCreatingHIT: false
       });
-      this.waitAndSubmitNextHIT(hitId);
+      this.waitAndCreateNextHIT(hitId);
     });
   }
 
@@ -66,7 +69,6 @@ export default class NewHITForm extends React.Component {
   }
 
   render() {
-    let url = `https://workersandbox.mturkcontent.com/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${this.state.hitId}`;
     let formDisabled = this.state.isCreatingHIT || this.state.isWaitingForHIT;
 
     return (
@@ -82,7 +84,8 @@ export default class NewHITForm extends React.Component {
           <input type="submit" value="Create New HIT" onClick={this.createHIT.bind(this)}
             disabled={formDisabled} />
         </div>
-        { this.state.hitId && <p><a href={url}>{url}</a></p> }
+
+        <HITHistory hits={this.state.hitHistory} />
       </div>
     );
   }

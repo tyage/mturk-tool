@@ -87,10 +87,6 @@ class MTurk {
       waitHIT(resolve);
     });
   }
-
-  parseXML(xml) {
-    return parseXML(xml);
-  }
 };
 
 export default (new MTurk());
