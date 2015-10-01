@@ -1,7 +1,6 @@
 import React from 'react';
 import ConfigService from '../services/config';
 
-// TODO: Set keys to localstorage
 export default class Config extends React.Component {
   constructor(props) {
     super(props);

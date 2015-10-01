@@ -4,16 +4,14 @@ import NewHITForm from './new-hit-form';
 import MTurk from '../services/mturk';
 
 class App extends React.Component {
-  onHITCreate(hitId) {
-    MTurk.waitHIT(hitId).then(hit => {
-      console.log(hit)
-    });
+  constructor(props) {
+    super(props);
   }
   render() {
     return (
       <div>
         <Config></Config>
-        <NewHITForm onHITCreate={this.onHITCreate}></NewHITForm>
+        <NewHITForm></NewHITForm>
       </div>
     );
   }

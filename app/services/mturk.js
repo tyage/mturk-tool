@@ -1,6 +1,7 @@
 import Config from './config';
 import Question from './question';
 import crypto from 'crypto';
+import parseXML from '../libs/parse-xml';
 
 let generateHmac = (data, key) => {
   return crypto.createHmac('sha1', key).update(data).digest('base64');
@@ -23,7 +24,7 @@ class MTurk {
 
     return fetch(`${endpoint}/?${param}`, {})
       .then(res => res.text())
-      .then(text => (new DOMParser()).parseFromString(text, 'text/xml'));
+      .then(text => parseXML(text));
   }
 
   createHIT(template, questions, params = {}) {
@@ -75,7 +76,7 @@ class MTurk {
       ]).then(values => {
         let [hit, assignments] = values;
         if (isHITDone(hit, assignments)) {
-          resolve(hit);
+          resolve(hit, assignments);
         } else {
           window.setTimeout(() => waitHIT(resolve), waitSecound);
         }
@@ -85,6 +86,10 @@ class MTurk {
     return new Promise((resolve, reject) => {
       waitHIT(resolve);
     });
+  }
+
+  parseXML(xml) {
+    return parseXML(xml);
   }
 };
 
