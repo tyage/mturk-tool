@@ -1,0 +1,35 @@
+<style type="text/css">
+#questoin-choices {
+  border: 1px solid black;
+}
+#question-choices .choice {
+  display: inline-block;
+}
+#question-choices .choice.selected {
+  border: 3px solid red;
+}
+#question-choices img {
+  height: 100px;
+}
+#question-content img {
+  height: 200px;
+}
+</style>
+
+<p>Choose the photos that you describe</p>
+
+<div id="question-choices"></div>
+
+<div>
+  <p>Workers should look carefully at the provided image. Then they should answer the following questions about the image:</p>
+  <p>1) What objects do you see in the image (people, children, food, etc?)</p>
+  <p>2) What scenes do you see in the image (beach, indoor, outdoor, highway, church, etc) / Where is this event taking place?</p>
+  <p>3) What actions do you see in the image (hugging, shaking hands, clapping, cheering, etc?)</p>
+  <p>4) What social event do you think is depicted in this image? (birthday, party, etc?)</p>
+  <br/>
+  <p>The answers must be clear and must describe the image as fully as possible.</p>
+</div>
+
+<div id="question-content"></div>
+
+<textarea cols="80" name="answer-text" rows="10"></textarea>

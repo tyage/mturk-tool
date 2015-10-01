@@ -6,10 +6,13 @@ $(function() {
   var destQuestionChoices = $('#question-choices');
   var destQuestionContent = $('#question-content');
 
-  // move choices to template
-  destQuestionChoices.append(srcQuestionChoices);
+  // move choices into template
+  destQuestionChoices.append(srcQuestionChoices.find('.choice'));
 
   var selectChoice = function(choice) {
+    destQuestionChoices.find('.choice').removeClass('selected');
+    $(choice).addClass('selected');
+
     var id = $(choice).data('id');
     var content = srcQuestionContents.find('.content').filter(function() {
       return $(this).data('id') === id;
@@ -17,7 +20,7 @@ $(function() {
     destQuestionContent.html(content.html());
   };
 
-  srcQuestionChoices.find('.choice').each(function() {
+  destQuestionChoices.find('.choice').each(function() {
     $(this).click(function() {
       selectChoice(this);
     });

@@ -1,11 +1,3 @@
-#src-question-contents {
+#src-question-contents, #src-question-choices {
   display: none;
-}
-#question-choices img {
-  width: 100px;
-  height: 100px;
-}
-#question-content img {
-  width: 200px;
-  height: 200px;
 }
