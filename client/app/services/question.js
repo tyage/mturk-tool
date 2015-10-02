@@ -1,4 +1,5 @@
 import fs from 'fs';
+import Config from '../services/config';
 
 let appJS = fs.readFileSync(__dirname + '/../resources/app.js');
 let appCSS = fs.readFileSync(__dirname + '/../resources/app.css');
@@ -14,6 +15,7 @@ let questionTemplate = (content, frameHeight) => {
 
 // XXX: escaping html is not needed
 let HITPageTemplate = (content, questions) => {
+  let questionSize = 2;
   return `
 <!DOCTYPE html>
 <html>
@@ -45,6 +47,10 @@ let HITPageTemplate = (content, questions) => {
       <p><input type='submit' id='submitButton' value='Submit' /></p>
     </form>
 
+    <script>
+      var questionServerEndpoint = '${Config.get('questionServerEndpoint')}';
+      var questionSize = ${questionSize};
+    </script>
     <script>${appJS}</script>
   </body>
 </html>

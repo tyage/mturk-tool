@@ -12,7 +12,8 @@ let config = new Config();
 let defaultConfig = {
   apiEndpoint: 'https://mechanicalturk.sandbox.amazonaws.com',
   workerEndpoint: 'https://workersandbox.mturk.com',
-  workerContentEndpoint: 'https://workersandbox.mturkcontent.com'
+  workerContentEndpoint: 'https://workersandbox.mturkcontent.com',
+  questionServerEndpoint: 'http://mocos.kitchen'
 };
 for (let key in defaultConfig) {
   if (config.get(key) === null) {

@@ -1,32 +1,54 @@
 turkSetAssignmentID();
 
 $(function() {
-  var srcQuestionChoices = $('#src-question-choices');
-  var srcQuestionContents = $('#src-question-contents');
-  var destQuestionChoices = $('#question-choices');
-  var destQuestionContent = $('#question-content');
   var selectedQuesion = $('#selected-question');
+  var destQuestionContent = $('#question-content');
+  var destQuestionChoices = $('#question-choices');
 
-  // move choices into template
-  destQuestionChoices.append(srcQuestionChoices.find('.choice'));
+  var fetchQuestions = function(questionSize) {
+    return $.ajax({
+      url: window.questionServerEndpoint + '/get/' + questionSize
+    });
+  };
 
-  var selectChoice = function(choice) {
-    var id = $(choice).data('id');
+  var returnQuestions = function(questions) {
+    return $.ajax({
+      url: window.questionServerEndpoint + '/return',
+      method: 'POST',
+      data: questions
+    });
+  };
 
+  var selectChoice = function(choice, question) {
     destQuestionChoices.find('.choice').removeClass('selected');
     $(choice).addClass('selected');
 
-    selectedQuesion.val(id);
+    selectedQuesion.val(question.id);
 
-    var content = srcQuestionContents.find('.content').filter(function() {
-      return $(this).data('id') === id;
-    });
-    destQuestionContent.html(content.html());
+    destQuestionContent.html(question.contentHTML);
   };
 
-  destQuestionChoices.find('.choice').each(function() {
-    $(this).click(function() {
-      selectChoice(this);
+  var createChoice = function(question) {
+    var choice = $('<div />').addClass('choice');
+    choice.html(question.choiceHTML);
+    $(choice).click(function() {
+      selectChoice(this, question);
+    });
+    return choice;
+  };
+
+  fetchQuestions(window.questionSize).then(function(questions) {
+    // add question choices into template
+    $(questions).each(function(question) {
+      destQuestionChoices.append(createChoice(question));
+    });
+
+    $('#mturk_form').submit(function() {
+      // return rest questions to server
+      var restQuestions = $(questions).filter(function(question) {
+        return question.id !== +selectedQuesion.val();
+      });
+      returnQuestions(restQuestions);
     });
   });
 });
