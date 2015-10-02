@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var choiceControl = require('./choice-control');
 
 var app = express();
+app.use(bodyParser.json());
 
 app.use('/', choiceControl);
 
