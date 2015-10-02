@@ -86,24 +86,39 @@ export default class NewHITForm extends React.Component {
     });
   }
 
+  hitQuestionsChange(e) {
+    this.setState({
+      hitQuestions: JSON.parse(e.target.value)
+    });
+  }
+
   render() {
     let formDisabled = this.state.isCreatingHIT || this.state.isWaitingForHIT;
 
     return (
       <div id="new-hit-form">
         <h2>Create New HIT</h2>
+
         <div className="form-section">
           <label>New HIT Template</label>
           <textarea id="new-hit-template" onChange={this.hitTemplateChange.bind(this)}
             defaultValue={this.state.hitTemplate} disabled={formDisabled}></textarea>
         </div>
+
+        <div className="form-section">
+          <label>New HIT Questions</label>
+          <textarea id="new-hit-questions" onChange={this.hitQuestionsChange.bind(this)}
+            defaultValue={JSON.stringify(this.state.hitQuestions, null, 2)}
+            disabled={formDisabled}></textarea>
+        </div>
+
         <div className="form-section">
           <label></label>
           <input type="submit" value="Create New HIT" onClick={this.createHIT.bind(this)}
             disabled={formDisabled} />
         </div>
 
-        <HITHistory hits={this.state.hitHistory} assignments={this.state.assignmentsHistory} />
+        <HITHistory hits={this.state.hitHistory} assignmentsList={this.state.assignmentsHistory} />
       </div>
     );
   }
