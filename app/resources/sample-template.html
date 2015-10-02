@@ -1,9 +1,12 @@
 <style type="text/css">
-#questoin-choices {
+#question-choices {
   border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
 }
 #question-choices .choice {
   display: inline-block;
+  margin: 10px;
 }
 #question-choices .choice.selected {
   border: 3px solid red;
@@ -16,9 +19,13 @@
 }
 </style>
 
-<p>Choose the photos that you describe</p>
+<p>Choose the photo that you will describe</p>
 
-<div id="question-choices"></div>
+<div id="question-choices">
+  <p>Choices:</p>
+</div>
+
+<div id="question-content"></div>
 
 <div>
   <p>Workers should look carefully at the provided image. Then they should answer the following questions about the image:</p>
@@ -29,7 +36,5 @@
   <br/>
   <p>The answers must be clear and must describe the image as fully as possible.</p>
 </div>
-
-<div id="question-content"></div>
 
 <textarea cols="80" name="answer-text" rows="10"></textarea>
