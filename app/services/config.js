@@ -10,7 +10,7 @@ class Config {
 let config = new Config();
 
 let defaultConfig = {
-  endpoint: 'https://mechanicalturk.sandbox.amazonaws.com',
+  apiEndpoint: 'https://mechanicalturk.sandbox.amazonaws.com',
   workerEndpoint: 'https://workersandbox.mturk.com',
   workerContentEndpoint: 'https://workersandbox.mturkcontent.com'
 };

@@ -11,15 +11,15 @@ class MTurk {
   request(params) {
     params = Object.assign({
       Service: 'AWSMechanicalTurkRequester',
-      AWSAccessKeyId: Config.get('AWSAccessKeyId'),
+      AWSAccessKeyId: Config.get('awsAccessKeyId'),
       Version: '2014-08-15',
       Timestamp: (new Date()).toISOString()
     }, params);
     params.Signature = generateHmac(`${params.Service}${params.Operation}${params.Timestamp}`,
-      Config.get('AWSSecretAccessKey'));
+      Config.get('awsSecretAccessKey'));
     let param = Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
 
-    return fetch(`${Config.get('endpoint')}/?${param}`, {})
+    return fetch(`${Config.get('apiEndpoint')}/?${param}`, {})
       .then(res => res.text())
       .then(text => parseXML(text));
   }
