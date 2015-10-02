@@ -1,13 +1,13 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var choiceControl = require('./choice-control');
 
 var app = express();
 
-app.get('/', function(req, res, next) {
-  res.json({title: "test"})
-
-});
+app.use('/', choiceControl);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
