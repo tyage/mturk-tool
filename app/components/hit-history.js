@@ -1,5 +1,6 @@
 import React from 'react';
 import parseXML from '../libs/parse-xml';
+import Config from '../services/config';
 
 export default class HITHistory extends React.Component {
   constructor(props) {
@@ -22,16 +23,19 @@ export default class HITHistory extends React.Component {
     };
 
     let createHITList = (hits, assignmentsList) => {
+      let workerEndpoint = Config.get('workerEndpoint');
+      let workerContentEndpoint = Config.get('workerContentEndpoint');
       return Object.keys(hits).map(hitId => {
         let hit = hits[hitId];
+        let groupId = hit.querySelector('HITGroupId').textContent;
+        let hitUrl = `${workerContentEndpoint}/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${hitId}`;
+        let previewUrl = `${workerEndpoint}/mturk/preview?groupId=${groupId}`
         let assignments = assignmentsList[hitId];
-        let url = `https://workersandbox.mturkcontent.com/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${hitId}`;
 
         return (
           <div className="hit-history">
-            <div>
-              <a href={url}>{url}</a>
-            </div>
+            <p><a href={hitUrl}>{hitUrl}</a></p>
+            <p><a href={previewUrl}>{previewUrl}</a></p>
             <div className="assignments">
               {createAssignments(assignments)}
             </div>

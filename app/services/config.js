@@ -7,4 +7,17 @@ class Config {
   }
 };
 
-export default (new Config());
+let config = new Config();
+
+let defaultConfig = {
+  endpoint: 'https://mechanicalturk.sandbox.amazonaws.com',
+  workerEndpoint: 'https://workersandbox.mturk.com',
+  workerContentEndpoint: 'https://workersandbox.mturkcontent.com'
+};
+for (let key in defaultConfig) {
+  if (config.get(key) === null) {
+    config.set(key, defaultConfig[key]);
+  }
+}
+
+export default config;

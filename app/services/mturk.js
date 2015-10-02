@@ -7,9 +7,6 @@ let generateHmac = (data, key) => {
   return crypto.createHmac('sha1', key).update(data).digest('base64');
 };
 
-// XXX: sandbox
-let endpoint = 'https://mechanicalturk.sandbox.amazonaws.com';
-
 class MTurk {
   request(params) {
     params = Object.assign({
@@ -22,7 +19,7 @@ class MTurk {
       Config.get('AWSSecretAccessKey'));
     let param = Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
 
-    return fetch(`${endpoint}/?${param}`, {})
+    return fetch(`${Config.get('endpoint')}/?${param}`, {})
       .then(res => res.text())
       .then(text => parseXML(text));
   }
