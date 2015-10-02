@@ -6,6 +6,12 @@ var choiceControl = require('./choice-control');
 
 var app = express();
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'workersandbox.mturkcontent.com');
+  res.header('Access-Control-Allow-Methods', 'GET,POST');
+
+  next();
+});
 
 app.use('/', choiceControl);
 
