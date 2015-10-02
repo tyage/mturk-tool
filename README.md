@@ -1,6 +1,3 @@
-# mturk-tool
+# Mturk tool
 
-```sh
-$ npm install
-$ ./node_modules/.bin/electron .
-```
+client & server
