@@ -6,8 +6,8 @@ export default class HITHistory extends React.Component {
   }
   render() {
     let createHITList = hits => {
-      return hits.map(hit => {
-        let url = `https://workersandbox.mturkcontent.com/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${hit}`;
+      return Object.keys(hits).map(hitId => {
+        let url = `https://workersandbox.mturkcontent.com/dynamic/hit?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=${hitId}`;
         return (<p><a href={url}>{url}</a></p>);
       });
     };

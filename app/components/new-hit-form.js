@@ -14,7 +14,8 @@ export default class NewHITForm extends React.Component {
     this.state = {
       hitTemplate: sampleTemplate,
       hitQuestions: sampleQuestions,
-      hitHistory: [],
+      hitHistory: {},
+      assignmentsHistory: {},
       isCreatingHIT: false,
       isWaitingForHIT: false
     };
@@ -38,9 +39,13 @@ export default class NewHITForm extends React.Component {
         return q.id.toString() !== selectedQuestion;
       });
 
+      this.state.hitHistory[hitId] = hit;
+      this.state.assignmentsHistory[hitId] = assignments;
       this.setState({
         isWaitingForHIT: false,
-        hitQuestions: newHITQuestions
+        hitQuestions: newHITQuestions,
+        hitHistory: this.state.hitHistory,
+        assignmentsHistory: this.state.assignmentsHistory
       });
 
       this.createHIT();
@@ -57,12 +62,21 @@ export default class NewHITForm extends React.Component {
     });
 
     MTurk.createHIT(this.state.hitTemplate, this.state.hitQuestions).then(doc => {
-      let hitId = doc.querySelector('HITId').textContent;
       this.setState({
-        hitHistory: [...this.state.hitHistory, hitId],
         isCreatingHIT: false
       });
+
+      let hitId = doc.querySelector('HITId').textContent;
+
       this.waitAndCreateNextHIT(hitId);
+
+      return MTurk.getHIT(hitId);
+    }).then(hit => {
+      let hitId = hit.querySelector('HITId').textContent;
+      this.state.hitHistory[hitId] = hit;
+      this.setState({
+        hitHistory: this.state.hitHistory
+      });
     });
   }
 
@@ -89,7 +103,7 @@ export default class NewHITForm extends React.Component {
             disabled={formDisabled} />
         </div>
 
-        <HITHistory hits={this.state.hitHistory} />
+        <HITHistory hits={this.state.hitHistory} assignments={this.state.assignmentsHistory} />
       </div>
     );
   }
