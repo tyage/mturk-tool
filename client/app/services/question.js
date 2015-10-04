@@ -52,7 +52,6 @@ let HITPageTemplate = (content, questions) => {
       var questionSize = ${questionSize};
     </script>
     <script>${appJS}</script>
-    <script src="http://mocos.kitchen/get/2"></script>
   </body>
 </html>
 `
