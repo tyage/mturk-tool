@@ -16,7 +16,8 @@ router.get('/get/:size', function(req, res, next) {
   var returnChoices = choices.slice(0, size);
   choices = choices.slice(size);
 
-  res.json(returnChoices);
+  // res.json(returnChoices);
+  res.send(`fetchChoices(${JSON.stringify(returnChoices)});`);
 });
 
 router.post('/return', function(req, res, next) {
