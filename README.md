@@ -14,13 +14,13 @@ mturkTool.config.set('AWSSecretAccessKey', 'XXXXXXXX');
 
 let questions = [ Q1, Q2, Q3, Q4, Q5, Q6 ];
 
-let showHITWithQuestions = (hit, leftQuestion, rightQuestion) => {
+let workers = {};
+
+let generateContent = (leftQuestion, rightQuestion) => {
   return `choose which one ${leftQuestion} ${rightQuestion}`;
 };
 
-let workers = {};
-
-let onHitAssigned = (assignment) => {
+let onWorkerAssigned = (hit, assignment) => {
   let workerId = assignment.worker.id;
   if (!workers[workerId]) {
     workers[workerId] = {
@@ -32,10 +32,10 @@ let onHitAssigned = (assignment) => {
   // set question on hit
   let [leftQuestions, rightQuestions] = splitQuestions(worker.nextQuestions);
   let content = generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
-  this.setContent(content);
+  hit.setContent(content);
 
   // TODO: use async? promise?
-  let answer = this.getAnswer();
+  let answer = hit.getAnswer();
 
   // set next questions
   if (answer.selected === 'left') {
@@ -51,6 +51,9 @@ let onHitAssigned = (assignment) => {
 };
 
 for (i = 0; i < budget / hitCost; ++i) {
-  mturkTool.createHIT().on('hitAssigned', onHitAssigned);
+  let hit = mturkTool.createHIT();
+  let hit.on('workerAssigned', assignment => {
+    onWorkerAssigned(hit, assignment);
+  });
 }
 ```
