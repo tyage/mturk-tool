@@ -1,5 +1,11 @@
 # MTurk tool lib
 
+## What I do?
+
+![](https://raw.githubusercontent.com/tyage/mturk-tool/master/screenshots/flow.png)
+
+## Sample
+
 ```js
 let mturkTool = require('mturk-tool');
 
