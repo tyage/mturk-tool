@@ -3,6 +3,9 @@
 ```js
 let mturkTool = require('mturk-tool');
 
+mturkTool.config.set('AWSAccessKeyId', 'XXXXXXXX');
+mturkTool.config.set('AWSSecretAccessKey', 'XXXXXXXX');
+
 let questions = [ Q1, Q2, Q3, Q4, Q5, Q6 ];
 
 let showHITWithQuestions = (hit, leftQuestion, rightQuestion) => {
