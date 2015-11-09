@@ -15,19 +15,27 @@ mturkTool.config.set('AWSSecretAccessKey', 'XXXXXXXX');
 let questions = [ Q1, Q2, Q3, Q4, Q5, Q6 ];
 
 let showHITWithQuestions = (hit, leftQuestion, rightQuestion) => {
-  hit.setContent(`
-choose which one ${leftQuestion} ${rightQuestion}
-`);
+  return `choose which one ${leftQuestion} ${rightQuestion}`;
 };
 
-let onHitAssigned = (hit, assignment) => {
-  let worker = assignment.worker;
+let workers = {};
 
-  // set question on hit and get answer
-  let nextQuestions = worker.state.nextQuestions || questions;
-  let [leftQuestions, rightQuestions] = splitQuestions(nextQuestions);
-  showHITWithQuestions(hit, chooseOne(leftQuestions), chooseOne(rightQuestions));
-  let answer = hit.getAnswer();
+let onHitAssigned = (assignment) => {
+  let workerId = assignment.worker.id;
+  if (!workers[workerId]) {
+    workers[workerId] = {
+      nextQuestions: questions,
+      answers: []
+    };
+  }
+
+  // set question on hit
+  let [leftQuestions, rightQuestions] = splitQuestions(worker.nextQuestions);
+  let content = generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
+  this.setContent(content);
+
+  // TODO: use async? promise?
+  let answer = this.getAnswer();
 
   // set next questions
   if (answer.selected === 'left') {
@@ -37,9 +45,9 @@ let onHitAssigned = (hit, assignment) => {
   }
 
   // update worker's state
-  worker.state.answers.push(answer);
+  workers[workerId].answers.push(answer);
   // reset questions if nextQuestions has empty
-  worker.state.nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
+  workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
 };
 
 for (i = 0; i < budget / hitCost; ++i) {
