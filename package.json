@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel": "^6.0.15"
+  },
+  "dependencies": {
+    "crypto": "0.0.3"
   }
 }
