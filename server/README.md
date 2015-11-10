@@ -8,3 +8,9 @@ It does...
 - The server pass the content which is given from requester
 
 This is just a proxy between requester and worker!
+
+## Start server
+
+```js
+$ npm start
+```
