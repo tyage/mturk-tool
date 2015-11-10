@@ -1,6 +1,6 @@
 'use strict';
 
-let io = require('socket.io')(9290);
+let io = require('socket.io')(80);
 
 let hitRequester = {};
 let hitWorker = {};
