@@ -1,14 +1,20 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var choiceControl = require('./choice-control');
+let express = require('express');
+let bodyParser = require('body-parser');
+let choiceControl = require('./choice-control');
 
-var app = express();
+let app = express();
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'workersandbox.mturkcontent.com');
-  res.header('Access-Control-Allow-Methods', 'GET,POST');
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'workersandbox.mturkcontent.com',
+    'www.mturkcontent.com'
+  ];
+  const allowedMethods = ['GET', 'POST'];
+
+  res.header('Access-Control-Allow-Origin', allowedOrigins.join(','));
+  res.header('Access-Control-Allow-Methods', allowedMethods.join(','));
 
   next();
 });
@@ -16,8 +22,8 @@ app.use(function(req, res, next) {
 app.use('/', choiceControl);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+app.use((req, res, next) => {
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -27,7 +33,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.send({
       message: err.message,
@@ -38,7 +44,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send({
     message: err.message,

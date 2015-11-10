@@ -1,25 +1,25 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var choices = [];
+let choices = [];
 
-router.post('/init', function(req, res, next) {
+router.post('/init', (req, res, next) => {
   choices = req.body;
 
   res.json({ 'success': true })
 });
 
-router.get('/get/:size', function(req, res, next) {
-  var size = +req.params.size;
-  var returnChoices = choices.slice(0, size);
+router.get('/get/:size', (req, res, next) => {
+  let size = +req.params.size;
+  let returnChoices = choices.slice(0, size);
   choices = choices.slice(size);
 
   res.json(returnChoices);
 });
 
-router.post('/return', function(req, res, next) {
+router.post('/return', (req, res, next) => {
   choices = choices.concat(req.body);
 
   res.json({ 'success': true })
