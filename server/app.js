@@ -1,50 +1,31 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var choiceControl = require('./choice-control');
+let io = require('socket.io')(80);
 
-var app = express();
-app.use(bodyParser.json());
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'workersandbox.mturkcontent.com');
-  res.header('Access-Control-Allow-Methods', 'GET,POST');
+let hitRequester = {};
+let hitWorker = {};
 
-  next();
-});
-
-app.use('/', choiceControl);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.send({
-      message: err.message,
-      error: err
-    });
+io.on('connection', socket => {
+  // requester wait until hit is assigned to worker
+  socket.on('waitAssignment', hitId => {
+    hitRequester[hitId] = socket;
   });
-}
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.send({
-    message: err.message,
-    error: {}
+  // worker need HIT content
+  socket.on('requestContent', (hitId, assignmentId) => {
+    let requester = hitRequester[hitId];
+    hitWorker[hitId] = socket;
+    if (requester) {
+      // request HIT content to requester
+      requester.emit('requestContent', hitId, assignmentId);
+    }
+  });
+
+  // requester response HIT content
+  socket.on('setContent', (hitId, content) => {
+    let worker = hitWorker[hitId];
+    if (worker) {
+      worker.emit('setContent', hitId, content);
+    }
   });
 });
-
-
-module.exports = app;
