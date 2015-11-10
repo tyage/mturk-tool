@@ -1,9 +1,6 @@
 'use strict';
 
-let app = require('http').createServer(handler)
-let io = require('socket.io')(app);
-
-app.listen(80);
+let io = require('socket.io')(9290);
 
 io.on('connection', socket => {
   socket.emit('news', { hello: 'world' });
