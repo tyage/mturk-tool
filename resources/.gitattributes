@@ -1,2 +1,2 @@
-*.min.css binary
-*.min.js binary
+dist/*.css binary
+dist/*.js binary
