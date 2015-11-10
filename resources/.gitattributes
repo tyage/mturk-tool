@@ -1,2 +1,2 @@
-dist/*.css binary
-dist/*.js binary
+dist/css/*.css binary
+dist/js/*.js binary
