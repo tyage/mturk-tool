@@ -23,7 +23,7 @@ class QuestionController {
         return;
       }
 
-      hit.assign(assignmentId);
+      hit.assignWorker(assignmentId);
     });
   }
 
