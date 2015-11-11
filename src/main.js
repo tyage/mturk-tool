@@ -5,7 +5,7 @@ var createHIT = (param) => {
   return new HIT(param);
 };
 
-export {
+export default {
   createHIT: createHIT,
   config: Config
 };
