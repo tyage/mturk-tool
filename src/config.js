@@ -5,7 +5,7 @@ let defaultConfig = {
   questionControllerServer: 'http://mocos.kitchen' // call questionController.reconnect after change this
 };
 for (let key in defaultConfig) {
-  if (config.get(key) === null) {
+  if (config.get(key) === undefined) {
     config.set(key, defaultConfig[key]);
   }
 }
