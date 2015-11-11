@@ -5,7 +5,7 @@ import socketIo from 'socket.io';
 let app = express();
 app.listen(80);
 
-app.use('/static', express.static('public'));
+app.use('/static', express.static('public/dist'));
 
 let io = socketIo(http.Server(app));
 
