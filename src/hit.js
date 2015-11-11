@@ -10,7 +10,7 @@ export default class HIT extends EventEmitter {
     super();
 
     this.params = Object.assign({
-      Question: mturkTool.generateQuestionXML(defaultQuestion()),
+      Question: mturk.generateQuestionXML(defaultQuestion()),
       MaxAssignments: 1,
       Title: 'sample HIT ' + new Date(), // XXX: this is sample
       Description: 'sample desc', // XXX: this is sample
