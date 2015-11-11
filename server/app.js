@@ -3,11 +3,17 @@ import http from 'http';
 import socketIo from 'socket.io';
 
 let app = express();
-app.listen(80);
+let server = http.Server(app);
+let io = socketIo(server);
+
+server.listen(80);
 
 app.use('/static', express.static('public/dist'));
-
-let io = socketIo(http.Server(app));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 let hitRequester = {};
 let hitWorker = {};
