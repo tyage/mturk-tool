@@ -15,7 +15,7 @@ export default class HIT extends EventEmitter {
       Title: 'sample HIT ' + new Date(), // XXX: this is sample
       Description: 'sample desc', // XXX: this is sample
       AssignmentDurationInSeconds: 30, // XXX: this is sample
-      LifetimeInSeconds: 604800, // XXX: this is sample
+      LifetimeInSeconds: 3600, // XXX: this is sample
       'Reward.1.Amount': 0.32, // XXX: this is sample
       'Reward.1.CurrencyCode': 'USD' // XXX: this is sample
     }, params);
