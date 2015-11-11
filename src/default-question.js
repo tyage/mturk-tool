@@ -7,9 +7,9 @@ let defaultQuestion = () => {
 <head>
   <meta charset="UTF-8">
   <title></title>
-  <link rel="stylesheet" href="https://raw.githubusercontent.com/tyage/mturk-tool/master/resources/dist/css/app.css" />
+  <link rel="stylesheet" href="${Config.get('questionControllerServer')}/static/css/app.css" />
   <script>window.questionControllerServer = "${Config.get('questionControllerServer')}";</script>
-  <script src="https://raw.githubusercontent.com/tyage/mturk-tool/master/resources/dist/js/app.js"></script>
+  <script src="${Config.get('questionControllerServer')}/static/js/app.js"></script>
 </head>
 <body>
   <div id="content"></div>
