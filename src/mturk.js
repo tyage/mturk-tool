@@ -43,6 +43,15 @@ class MTurk {
       AssignmentId: AssignmentId
     }, params));
   }
+
+  generateQuestionXML(content, frameHeight = 450) {
+    return `
+<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
+  <HTMLContent><![CDATA[ ${content} ]]></HTMLContent>
+  <FrameHeight>${frameHeight}</FrameHeight>
+</HTMLQuestion>
+`
+  }
 };
 
 export default (new MTurk());
