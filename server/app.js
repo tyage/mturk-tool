@@ -1,12 +1,13 @@
 import express from 'express';
+import http from 'http';
 import socketIo from 'socket.io';
 
-let app = express.createServer();
+let app = express();
 app.listen(80);
 
 app.use('/static', express.static('public'));
 
-let io = socketIo(app);
+let io = socketIo(http.Server(app));
 
 let hitRequester = {};
 let hitWorker = {};
