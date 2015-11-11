@@ -40,7 +40,7 @@ class MTurk {
   getAssignment(assignmentId, params = {}) {
     return this.request(Object.assign({
       Operation: 'GetAssignment',
-      AssignmentId: AssignmentId
+      AssignmentId: assignmentId
     }, params));
   }
 
