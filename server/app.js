@@ -1,6 +1,12 @@
-'use strict';
+import express from 'express';
+import socketIo from 'socket.io';
 
-let io = require('socket.io')(80);
+let app = express.createServer();
+app.listen(80);
+
+app.use('/static', express.static('public'));
+
+let io = socketIo(app);
 
 let hitRequester = {};
 let hitWorker = {};
