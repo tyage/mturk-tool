@@ -14,6 +14,7 @@ io.on('connection', socket => {
   // worker need HIT content
   socket.on('requestContent', (hitId, assignmentId) => {
     let requester = hitRequester[hitId];
+    console.log(hitId)
     hitWorker[hitId] = socket;
     if (requester) {
       // request HIT content to requester

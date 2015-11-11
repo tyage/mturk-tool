@@ -1,4 +1,4 @@
-import mturkTool from 'mturk-tool';
+import mturkTool from '../../lib/main';
 
 mturkTool.config.set('awsAccessKeyId', process.env.AWS_ACCESS_KEY_ID);
 mturkTool.config.set('awsSecretAccessKey', process.env.AWS_SECRET_ACCESS_KEY);
@@ -72,12 +72,13 @@ let onWorkerAssigned = (hit, assignment) => {
 */
 };
 
-let budget = 10;
-let hitCost = 2;
+let budget = 0.04;
+let hitCost = 0.02;
 for (let i = 0; i < budget / hitCost; ++i) {
   let hit = mturkTool.createHIT({
     'Reward.1.Amount': hitCost
   });
+  console.log(hit);
   hit.on('workerAssigned', assignment => {
     onWorkerAssigned(hit, assignment);
   });
