@@ -18,7 +18,7 @@ class QuestionController {
   waitAssignment(hit) {
     this.socket.emit('waitAssignment', hit.id);
 
-    this.socket.on('requestContent', (hitId, assignedId) => {
+    this.socket.on('requestContent', (hitId, assignmentId) => {
       if (hitId !== hit.id) {
         return;
       }
