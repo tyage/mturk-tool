@@ -44,7 +44,6 @@ let generateContent = (leftQuestion, rightQuestion) => {
 };
 
 let onWorkerAssigned = (hit, assignment) => {
-  console.log(assignment.raw);
   let workerId = assignment.worker.id;
   if (!workers[workerId]) {
     workers[workerId] = {
@@ -52,6 +51,7 @@ let onWorkerAssigned = (hit, assignment) => {
       answers: []
     };
   }
+  let worker = workers[workerId];
 
   // set question on hit
   let [leftQuestions, rightQuestions] = splitQuestions(worker.nextQuestions);
@@ -82,7 +82,6 @@ for (let i = 0; i < budget / hitCost; ++i) {
   let hit = mturkTool.createHIT({
     'Reward.1.Amount': hitCost
   });
-  console.log(hit);
   hit.on('workerAssigned', assignment => {
     onWorkerAssigned(hit, assignment);
   });
