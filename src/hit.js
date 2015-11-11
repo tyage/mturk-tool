@@ -7,6 +7,8 @@ import { EventEmitter } from 'events';
 
 export default class HIT extends EventEmitter {
   constructor(params = {}) {
+    super();
+
     this.params = Object.assign({
       Question: defaultQuestion(),
       MaxAssignments: 1,
