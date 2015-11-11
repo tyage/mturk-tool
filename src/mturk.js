@@ -27,7 +27,7 @@ class MTurk {
   createHIT(params) {
     return this.request(Object.assign({
       Operation: 'CreateHIT'
-    }), params);
+    }, params));
   }
 
   getHIT(hitId, params = {}) {
