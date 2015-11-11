@@ -1,5 +1,6 @@
 import HIT from './hit';
 import Config from './config';
+import questionController from './question-controller';
 
 var createHIT = (param) => {
   return new HIT(param);
@@ -7,5 +8,6 @@ var createHIT = (param) => {
 
 export default {
   createHIT: createHIT,
-  config: Config
+  config: Config,
+  server: questionController
 };
