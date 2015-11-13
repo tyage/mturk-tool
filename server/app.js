@@ -6,7 +6,7 @@ let app = express();
 let server = http.Server(app);
 let io = socketIo(server);
 
-server.listen(80);
+server.listen(process.env.PORT || 80);
 
 app.use('/static', express.static('public/dist'));
 app.use(function(req, res, next) {
