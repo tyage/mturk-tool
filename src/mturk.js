@@ -9,14 +9,21 @@ let generateHmac = (data, key) => {
 
 class MTurk {
   request(params) {
+    let awsAccessKeyId = Config.get('awsAccessKeyId');
+    let awsSecretAccessKey = Config.get('awsSecretAccessKey');
+    if (!awsAccessKeyId || !awsSecretAccessKey) {
+      console.error('set awsAccessKeyId and awsSecretAccessKey');
+      process.exit();
+    }
+
     params = Object.assign({
       Service: 'AWSMechanicalTurkRequester',
-      AWSAccessKeyId: Config.get('awsAccessKeyId'),
+      AWSAccessKeyId: awsAccessKeyId,
       Version: '2014-08-15',
       Timestamp: (new Date()).toISOString()
     }, params);
     params.Signature = generateHmac(`${params.Service}${params.Operation}${params.Timestamp}`,
-      Config.get('awsSecretAccessKey'));
+      awsSecretAccessKey);
     let param = Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
 
     return fetch(`${Config.get('apiEndpoint')}/?${param}`, {})
