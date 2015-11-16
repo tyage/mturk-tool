@@ -1,6 +1,5 @@
 import Config from './config';
 import crypto from 'crypto';
-import parseXML from './parse-xml';
 import fetch from 'node-fetch';
 
 let generateHmac = (data, key) => {
