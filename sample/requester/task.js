@@ -3,10 +3,6 @@ import mturkTool from '../../lib/main';
 mturkTool.config.set('awsAccessKeyId', process.env.AWS_ACCESS_KEY_ID);
 mturkTool.config.set('awsSecretAccessKey', process.env.AWS_SECRET_ACCESS_KEY);
 
-// reconnect when questionControllerServer is changed
-mturkTool.config.set('questionControllerServer', 'http://localhost');
-mturkTool.server.reconnect();
-
 let questions = [
   "question 1",
   "question 2",
