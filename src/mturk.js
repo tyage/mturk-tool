@@ -1,6 +1,7 @@
 import Config from './config';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
+import jsdom from 'jsdom';
 
 let generateHmac = (data, key) => {
   return crypto.createHmac('sha1', key).update(data).digest('base64');
@@ -27,7 +28,12 @@ class MTurk {
 
     return fetch(`${Config.get('apiEndpoint')}/?${param}`, {})
       .then(res => res.text())
-      .then(text => parseXML(text));
+      .then(text => {
+        console.log(text); // TODO: use general logger
+        return jsdom.env(text, {
+          parsingMode: 'xml'
+        });
+      });
   }
 
   createHIT(params) {
