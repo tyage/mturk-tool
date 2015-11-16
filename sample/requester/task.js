@@ -59,20 +59,22 @@ let onWorkerAssigned = (hit, assignment) => {
   hit.setContent(content);
 
 /*
-  // TODO: use async? promise?
-  let answer = hit.getAnswer();
+  let answer = assignment.getAnswer().then(answer => {
+    // accepted
+    // set next questions
+    if (answer.selected === 'left') {
+      nextQuestions = leftQuestions;
+    } else {
+      nextQuestions = rightQuestions;
+    }
 
-  // set next questions
-  if (answer.selected === 'left') {
-    nextQuestions = leftQuestions;
-  } else {
-    nextQuestions = rightQuestions;
-  }
-
-  // update worker's state
-  workers[workerId].answers.push(answer);
-  // reset questions if nextQuestions has empty
-  workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
+    // update worker's state
+    workers[workerId].answers.push(answer);
+    // reset questions if nextQuestions has empty
+    workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
+  }).catch(reject => {
+    // rejected
+  });
 */
 };
 
