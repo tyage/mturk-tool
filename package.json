@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/main.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel --presets es2015 src --out-dir lib --source-maps inline",
+    "build": "./node_modules/.bin/babel src --out-dir lib --source-maps inline",
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
   },
   "author": "",
