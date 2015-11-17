@@ -25,10 +25,10 @@ export default class HIT extends EventEmitter {
 
   submitAndWait() {
     // submit to mturk and wait assignment event from question controller
-    mturk.createHIT(this.params).then(doc => {
-      let hitId = doc.getElementsByTagName('HITId');
+    mturk.createHIT(this.params).then($ => {
+      let hitId = $('HITId');
       if (hitId.length > 0) {
-        this.id = hitId[0].textContent;
+        this.id = hitId.text();
 
         questionController.waitAssignment(this);
       }
