@@ -33,11 +33,15 @@ let sampleHIT = `
 </HIT>
 `;
 let sampleHITId = '123RVWYBAZW00EXAMPLE';
+let sampleHITRewardAmount = '25';
 
 describe('parser', () => {
   describe('parseHIT', () => {
     it('should get HITId', () => {
       assert.equal(parseHIT(loadXML(sampleHIT)).HITId, sampleHITId);
+    });
+    it('should get Reward.Amount', () => {
+      assert.equal(parseHIT(loadXML(sampleHIT)).Reward.Amount, sampleHITRewardAmount);
     });
   });
 });
