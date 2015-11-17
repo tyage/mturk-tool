@@ -1,25 +1,39 @@
 import cheerio from 'cheerio';
 
+let loadXML = xml => cheerio.load(xml, { xmlMode: true });
+
+let recursiveParse = $ => {
+  if ($.children().length === 0) {
+    return $.text();
+  } else {
+    let data = {};
+    $.children().each((i, elem) => {
+      data[elem.tagName] = recursiveParse($(elem));
+    });
+    return data;
+  }
+};
+
+let parseQuestion = $ => {
+};
+
 let parseHIT = $ => {
-  return {
-    hitId: $()
-  };
+  let data = recursiveParse($('HIT'));
+  data.Question = parseQuestion(loadXML(data.Question));
+  return data;
 };
 
 let parseAnswer = $ => {
-  return {};
 };
 
 let parseAssignment = $ => {
-  let data = {};
-  $('Assignment').children().each((i, elem) => {
-    data[elem.tagName] = $(elem).text();
-  });
-  data.Answer = parseAnswer(cheerio.load(data.Answer), { xmlMode: true });
+  let data = recursiveParse($('Assignment'));
+  data.Answer = parseAnswer(loadXML(data.Answer));
   return data;
 };
 
 export default {
+  loadXML,
   parseHIT,
   parseAnswer,
   parseAssignment

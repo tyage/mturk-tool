@@ -1,7 +1,7 @@
 import Config from './config';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
+import { loadXML } from './parser';
 
 let generateHmac = (data, key) => {
   return crypto.createHmac('sha1', key).update(data).digest('base64');
@@ -30,7 +30,7 @@ class MTurk {
       .then(res => res.text())
       .then(text => {
         console.log(text); // TODO: use general logger
-        return cheerio.load(text, { xmlMode: true });
+        return loadXML(text);
       });
   }
 
