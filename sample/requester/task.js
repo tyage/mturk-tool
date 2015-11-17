@@ -43,33 +43,32 @@ let getContent = (hit, workerId) => {
   if (!workers[workerId]) {
     workers[workerId] = {
       nextQuestions: questions,
-      answers: []
+      results: []
     };
   }
   let worker = workers[workerId];
 
-  // set question on hit
   let [leftQuestions, rightQuestions] = splitQuestions(worker.nextQuestions);
+  worker.leftQuestions = leftQuestions;
+  worker.rightQuestions = rightQuestions;
+
   return generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
 };
 
-let onSolved = (hit, result) => {
-  let answer = assignment.getAnswer().then(answer => {
-    // accepted
-    // set next questions
-    if (answer.selected === 'left') {
-      nextQuestions = leftQuestions;
-    } else {
-      nextQuestions = rightQuestions;
-    }
+let onSolved = (hit, workerId, result) => {
+  let worker = workers[workerId];
 
-    // update worker's state
-    workers[workerId].answers.push(answer);
-    // reset questions if nextQuestions has empty
-    workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
-  }).catch(reject => {
-    // rejected
-  });
+  // set next questions
+  if (result.selected === 'left') {
+    nextQuestions = worker.leftQuestions;
+  } else {
+    nextQuestions = worker.rightQuestions;
+  }
+
+  // update worker's state
+  workers[workerId].results.push(result);
+  // reset questions if nextQuestions has empty
+  workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
 };
 
 let budget = 0.04;
@@ -82,7 +81,7 @@ for (let i = 0; i < budget / hitCost; ++i) {
     let content = getContent(hit, workerId);
     hit.setContent(content);
   });
-  hit.on('solved', result => {
-    onSolved(hit, result);
+  hit.on('solved', (workerId, result) => {
+    onSolved(hit, workerId, result);
   });
 }
