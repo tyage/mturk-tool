@@ -41,6 +41,7 @@ export default class HIT extends EventEmitter {
       if (result.Request.IsValid) {
         this.emit('workerAssigned', new Assignment(result.Assignment));
       } else {
+        // assignmentId === ASSIGNMENT_ID_NOT_AVAILABLE
         this.emit('workerWatch');
       }
     });

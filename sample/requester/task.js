@@ -39,8 +39,7 @@ let generateContent = (leftQuestion, rightQuestion) => {
   return `choose which one ${leftQuestion} ${rightQuestion}`;
 };
 
-let onWorkerAssigned = (hit, assignment) => {
-  let workerId = assignment.params.workerId;
+let getContent = (hit, workerId) => {
   if (!workers[workerId]) {
     workers[workerId] = {
       nextQuestions: questions,
@@ -51,10 +50,10 @@ let onWorkerAssigned = (hit, assignment) => {
 
   // set question on hit
   let [leftQuestions, rightQuestions] = splitQuestions(worker.nextQuestions);
-  let content = generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
-  hit.setContent(content);
+  return generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
+};
 
-/*
+let onSolved = (hit, result) => {
   let answer = assignment.getAnswer().then(answer => {
     // accepted
     // set next questions
@@ -71,7 +70,6 @@ let onWorkerAssigned = (hit, assignment) => {
   }).catch(reject => {
     // rejected
   });
-*/
 };
 
 let budget = 0.04;
@@ -80,7 +78,11 @@ for (let i = 0; i < budget / hitCost; ++i) {
   let hit = mturkTool.createHIT({
     'Reward.1.Amount': hitCost
   });
-  hit.on('workerAssigned', assignment => {
-    onWorkerAssigned(hit, assignment);
+  hit.on('requestContent', workerId => {
+    let content = getContent(hit, workerId);
+    hit.setContent(content);
+  });
+  hit.on('solved', result => {
+    onSolved(hit, result);
   });
 }
