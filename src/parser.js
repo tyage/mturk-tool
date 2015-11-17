@@ -49,8 +49,13 @@ let parseAssignment = $ => {
   return data;
 };
 
+let parseGetAssignmentResult = $ => {
+  return recursiveParse($('GetAssignmentResult'));
+};
+
 export {
   loadXML,
   parseHIT,
-  parseAssignment
+  parseAssignment,
+  parseGetAssignmentResult
 };

@@ -4,16 +4,16 @@ import { parseAssignment } from './parser';
 export default class Assignment {
   constructor($) {
     this.raw = assignment;
-    this.params = parseAssignment($);
+    this.params = parseGetAssignmentResult($);
   }
 
   getAnswer() {
-    let waitSecound = 30 * 1000;
+    const waitSecound = 30 * 1000;
 
     // wait until the assignment status changes
     let waitHIT = (resolve, reject) => {
       mturk.getAssignment(this.params.AssignmentId).then($ => {
-        let data = parseAssignment($);
+        let data = parseGetAssignmentResult($);
         switch (data.assignmentStatus) {
           case 'Submitted':
           case 'Approved':
