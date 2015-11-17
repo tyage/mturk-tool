@@ -1,33 +1,50 @@
 import mturk from './mturk';
+import cheerio from 'cheerio';
 
-let parseAssignment = assignment => {
+let parseAnswer = $ => {
+  return {};
+};
 
+let parseAssignment = $ => {
+  let rawAnswer = $('Answer').text();
+  return {
+    assignmentId: $('AssignmentId').text(),
+    workerId: $('WorkerId').text(),
+    hitId: $('HITId').text(),
+    assignmentStatus: $('AssignmentStatus').text(),
+    deadline: $('Deadline').text(),
+    acceptTime: $('AcceptTime').text(),
+    submitTime: $('SubmitTime').text(),
+    answer: parseAnswer(c.load(rawAnswer))
+  };
 };
 
 export default class Assignment {
-  constructor(assignment) {
+  constructor($) {
     this.raw = assignment;
-    this.worker = {
-      id: 'test'
-    };
+    this.params = parseAssignment($);
   }
 
   getAnswer() {
-    // wait until the assignment status changes
     let waitSecound = 30 * 1000;
+
+    // wait until the assignment status changes
     let waitHIT = (resolve, reject) => {
-      mturk.getAssignment(this.id).then(result => {
-        let assignment = parseAssignment(result);
-        switch (assignment.AssignmentStatus) {
+      mturk.getAssignment(this.id).then($ => {
+        let data = parseAssignment($);
+        switch (data.assignmentStatus) {
           case 'Submitted':
           case 'Approved':
-            resolve(assignment.answer);
-            break;
           case 'Rejected':
-            reject();
+            resolve(data.answer);
             break;
           default:
-            global.setTimeout(() => waitHIT(resolve, reject), waitSecound);
+            // if current time over the deadline, reject the answer
+            if (data.deadline) {
+              reject();
+            } else {
+              global.setTimeout(() => waitHIT(resolve, reject), waitSecound);
+            }
             break;
         }
       }).catch(() => {

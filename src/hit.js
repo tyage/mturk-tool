@@ -36,8 +36,8 @@ export default class HIT extends EventEmitter {
   }
 
   assignWorker(assignmentId) {
-    mturk.getAssignment(assignmentId).then(assignment => {
-      this.emit('workerAssigned', new Assignment(assignment));
+    mturk.getAssignment(assignmentId).then($ => {
+      this.emit('workerAssigned', new Assignment($));
     });
   }
 

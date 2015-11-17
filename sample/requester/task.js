@@ -40,7 +40,7 @@ let generateContent = (leftQuestion, rightQuestion) => {
 };
 
 let onWorkerAssigned = (hit, assignment) => {
-  let workerId = assignment.worker.id;
+  let workerId = assignment.params.workerId;
   if (!workers[workerId]) {
     workers[workerId] = {
       nextQuestions: questions,
