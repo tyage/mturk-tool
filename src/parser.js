@@ -48,6 +48,5 @@ let parseAssignment = $ => {
 export default {
   loadXML,
   parseHIT,
-  parseAnswer,
   parseAssignment
 };
