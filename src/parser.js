@@ -8,7 +8,18 @@ let recursiveParse = $ => {
   } else {
     let data = {};
     $.children().each((i, elem) => {
-      data[elem.tagName] = recursiveParse($(elem));
+      let key = elem.tagName;
+      let value = recursiveParse($(elem));
+      if (data[key] !== undefined) {
+        // duplicated data will be array
+        if (Array.isArray(data[key])) {
+          data[key].push(value);
+        } else {
+          data[key] = [data[key], value];
+        }
+      } else {
+        data[key] = value;
+      }
     });
     return data;
   }
