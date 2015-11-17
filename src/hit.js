@@ -3,6 +3,7 @@ import questionController from './question-controller';
 import Config from './config';
 import defaultQuestion from './default-question'
 import Assignment from './assignment';
+import { parseHIT } from './parser';
 import { EventEmitter } from 'events';
 
 export default class HIT extends EventEmitter {
@@ -26,10 +27,9 @@ export default class HIT extends EventEmitter {
   submitAndWait() {
     // submit to mturk and wait assignment event from question controller
     mturk.createHIT(this.params).then($ => {
-      let hitId = $('HITId');
-      if (hitId.length > 0) {
-        this.id = hitId.text();
-
+      let params = parseHIT($);
+      this.params = params;
+      if (params.HITId !== '') {
         questionController.waitAssignment(this);
       }
     });

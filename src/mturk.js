@@ -30,7 +30,7 @@ class MTurk {
       .then(res => res.text())
       .then(text => {
         console.log(text); // TODO: use general logger
-        return cheerio.load(text);
+        return cheerio.load(text, { xmlMode: true });
       });
   }
 

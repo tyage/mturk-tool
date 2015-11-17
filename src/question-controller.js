@@ -16,10 +16,10 @@ class QuestionController {
   }
 
   waitAssignment(hit) {
-    this.socket.emit('waitAssignment', hit.id);
+    this.socket.emit('waitAssignment', hit.params.HITId);
 
     this.socket.on('requestContent', (hitId, assignmentId) => {
-      if (hitId !== hit.id) {
+      if (hitId !== hit.params.HITId) {
         return;
       }
 
@@ -29,7 +29,7 @@ class QuestionController {
 
   setContent(hit, content) {
     // XXX: server doesn't check that hit is created by this requester...
-    this.socket.emit('setContent', hit.id, content)
+    this.socket.emit('setContent', hit.params.HITId, content)
   }
 }
 
