@@ -3,7 +3,7 @@ import questionController from './question-controller';
 import Config from './config';
 import defaultQuestion from './default-question'
 import Assignment from './assignment';
-import { parseHIT } from './parser';
+import { parseHIT, parseGetAssignmentResult } from './parser';
 import { EventEmitter } from 'events';
 
 export default class HIT extends EventEmitter {
@@ -37,7 +37,12 @@ export default class HIT extends EventEmitter {
 
   assignWorker(assignmentId) {
     mturk.getAssignment(assignmentId).then($ => {
-      this.emit('workerAssigned', new Assignment($));
+      let result = parseGetAssignmentResult($);
+      if (result.Request.IsValid) {
+        this.emit('workerAssigned', new Assignment(result.Assignment));
+      } else {
+        this.emit('workerWatch');
+      }
     });
   }
 

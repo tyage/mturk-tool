@@ -1,10 +1,9 @@
 import mturk from './mturk';
-import { parseAssignment } from './parser';
+import { parseGetAssignmentResult } from './parser';
 
 export default class Assignment {
-  constructor($) {
-    this.raw = assignment;
-    this.params = parseGetAssignmentResult($);
+  constructor(params) {
+    this.params = params;
   }
 
   getAnswer() {
@@ -14,15 +13,21 @@ export default class Assignment {
     let waitHIT = (resolve, reject) => {
       mturk.getAssignment(this.params.AssignmentId).then($ => {
         let data = parseGetAssignmentResult($);
-        switch (data.assignmentStatus) {
+        if (!data.Request.IsValid) {
+          reject();
+          return;
+        }
+
+        let assignment = data.Assignment;
+        switch (assignment.AssignmentStatus) {
           case 'Submitted':
           case 'Approved':
           case 'Rejected':
-            resolve(data.answer);
+            resolve(assignment.Answer);
             break;
           default:
             // if current time over the deadline, reject the answer
-            if (data.deadline) {
+            if (assignment.Deadline) {
               reject();
             } else {
               global.setTimeout(() => waitHIT(resolve, reject), waitSecound);
