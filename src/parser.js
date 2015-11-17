@@ -45,7 +45,7 @@ let parseAssignment = $ => {
   return data;
 };
 
-export default {
+export {
   loadXML,
   parseHIT,
   parseAssignment
