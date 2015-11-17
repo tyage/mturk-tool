@@ -25,21 +25,23 @@ let recursiveParse = $ => {
   }
 };
 
-let parseQuestion = $ => {
+let parseQuestionForm = $ => {
+  return recursiveParse($('QuestionForm'));
 };
 
 let parseHIT = $ => {
   let data = recursiveParse($('HIT'));
-  data.Question = parseQuestion(loadXML(data.Question));
+  data.Question = parseQuestionForm(loadXML(data.Question));
   return data;
 };
 
-let parseAnswer = $ => {
+let parseQuestionFormAnswers = $ => {
+  return recursiveParse($('QuestionFormAnswers'));
 };
 
 let parseAssignment = $ => {
   let data = recursiveParse($('Assignment'));
-  data.Answer = parseAnswer(loadXML(data.Answer));
+  data.Answer = parseQuestionFormAnswers(loadXML(data.Answer));
   return data;
 };
 
