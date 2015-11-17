@@ -37,7 +37,7 @@ let sampleHITId = '123RVWYBAZW00EXAMPLE';
 describe('parser', () => {
   describe('parseHIT', () => {
     it('should get HITId', () => {
-      assert.equal(parseHIT(sampleHIT).HITId, sampleHITId0);
+      assert.equal(parseHIT(loadXML(sampleHIT)).HITId, sampleHITId);
     });
   });
 });

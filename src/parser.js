@@ -2,14 +2,14 @@ import cheerio from 'cheerio';
 
 let loadXML = xml => cheerio.load(xml, { xmlMode: true });
 
-let recursiveParse = $ => {
-  if ($.children().length === 0) {
-    return $.text();
+let recursiveParse = root => {
+  if (root.children().length === 0) {
+    return root.text();
   } else {
     let data = {};
-    $.children().each((i, elem) => {
+    root.children().each((i, elem) => {
       let key = elem.tagName;
-      let value = recursiveParse($(elem));
+      let value = recursiveParse(cheerio(elem));
       if (data[key] !== undefined) {
         // duplicated data will be array
         if (Array.isArray(data[key])) {
