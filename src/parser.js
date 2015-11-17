@@ -31,7 +31,9 @@ let parseQuestionForm = $ => {
 
 let parseHIT = $ => {
   let data = recursiveParse($('HIT'));
-  data.Question = parseQuestionForm(loadXML(data.Question));
+  if (data.Question !== undefined) {
+    data.Question = parseQuestionForm(loadXML(data.Question));
+  }
   return data;
 };
 
@@ -41,7 +43,9 @@ let parseQuestionFormAnswers = $ => {
 
 let parseAssignment = $ => {
   let data = recursiveParse($('Assignment'));
-  data.Answer = parseQuestionFormAnswers(loadXML(data.Answer));
+  if (data.Answer !== undefined) {
+    data.Answer = parseQuestionFormAnswers(loadXML(data.Answer));
+  }
   return data;
 };
 

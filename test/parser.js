@@ -35,6 +35,11 @@ let sampleHIT = `
 let sampleHITId = '123RVWYBAZW00EXAMPLE';
 let sampleHITRewardAmount = '25';
 
+let sampleCreateHITResponse = `
+<?xml version="1.0"?>
+<CreateHITResponse><OperationRequest><RequestId>4883bcd2-0073-4512-8bcf-ae5d809110c5</RequestId></OperationRequest><HIT><Request><IsValid>True</IsValid></Request><HITId>123RVWYBAZW00EXAMPLE</HITId><HITTypeId>T100CN9P324W00EXAMPLE</HITTypeId></HIT></CreateHITResponse>
+`;
+
 describe('parser', () => {
   describe('parseHIT', () => {
     it('should get HITId', () => {
@@ -42,6 +47,9 @@ describe('parser', () => {
     });
     it('should get Reward.Amount', () => {
       assert.equal(parseHIT(loadXML(sampleHIT)).Reward.Amount, sampleHITRewardAmount);
+    });
+    it('should get HITId of CreateHITResponse', () => {
+      assert.equal(parseHIT(loadXML(sampleCreateHITResponse)).HITId, sampleHITId);
     });
   });
 });
