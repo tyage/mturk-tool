@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-let socket = io(window.questionControllerServer);
+let socket = io(window.requesterProxyServer);
 
 // decompose url parameter
 // https://www.mturkcontent.com/dynamic/hit?assignmentId=${assignmentId}&hitId=${hitId}

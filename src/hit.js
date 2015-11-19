@@ -1,5 +1,5 @@
 import mturk from './mturk';
-import questionController from './question-controller';
+import workerProxy from './worker-proxy';
 import Config from './config';
 import defaultQuestion from './default-question'
 import Assignment from './assignment';
@@ -30,7 +30,7 @@ export default class HIT extends EventEmitter {
       let params = parseHIT($);
       this.params = params;
       if (params.HITId !== '') {
-        questionController.waitAssignment(this);
+        workerProxy.waitAssignment(this);
       }
     });
   }
@@ -48,6 +48,6 @@ export default class HIT extends EventEmitter {
   }
 
   setContent(content) {
-    questionController.setContent(this, content);
+    workerProxy.setContent(this, content);
   }
 }

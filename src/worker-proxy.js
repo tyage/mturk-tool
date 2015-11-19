@@ -1,13 +1,13 @@
 import Config from './config';
 import io from 'socket.io-client';
 
-class QuestionController {
+class WorkerProxy {
   constructor() {
     this.connect();
   }
 
   connect() {
-    this.socket = io(Config.get('questionControllerServer'));
+    this.socket = io(Config.get('workerProxyServer'));
   }
 
   reconnect() {
@@ -33,4 +33,4 @@ class QuestionController {
   }
 }
 
-export default new QuestionController();
+export default new WorkerProxy();

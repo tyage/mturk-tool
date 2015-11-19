@@ -7,9 +7,9 @@ let defaultQuestion = () => {
 <head>
   <meta charset="UTF-8">
   <title></title>
-  <link rel="stylesheet" href="${Config.get('questionControllerServer')}/static/css/app.css" />
-  <script>window.questionControllerServer = "${Config.get('questionControllerServer')}";</script>
-  <script src="${Config.get('questionControllerServer')}/static/js/app.js"></script>
+  <link rel="stylesheet" href="${Config.get('workerProxyServer')}/static/css/app.css" />
+  <script>window.requesterProxyServer = "${Config.get('workerProxyServer')}";</script>
+  <script src="${Config.get('workerProxyServer')}/static/js/app.js"></script>
 </head>
 <body>
   <div id="content"></div>
