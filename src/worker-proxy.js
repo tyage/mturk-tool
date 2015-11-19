@@ -15,15 +15,23 @@ class WorkerProxy {
     this.connect();
   }
 
-  waitAssignment(hit) {
-    this.socket.emit('waitAssignment', hit.params.HITId);
+  waitWorker(hit) {
+    this.socket.emit('waitWorker', hit.params.HITId);
 
-    this.socket.on('requestContent', (hitId, assignmentId) => {
+    this.socket.on('requestContent', (hitId, workerId) => {
       if (hitId !== hit.params.HITId) {
         return;
       }
 
-      hit.assignWorker(assignmentId);
+      hit.requestContent(workerId);
+    });
+
+    this.socket.on('solved', (hitId, workerId, result) => {
+      if (hitId !== hit.params.HITId) {
+        return;
+      }
+
+      hit.resolve(workerId, result);
     });
   }
 

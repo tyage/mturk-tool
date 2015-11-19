@@ -30,21 +30,30 @@ export default class HIT extends EventEmitter {
       let params = parseHIT($);
       this.params = params;
       if (params.HITId !== '') {
-        workerProxy.waitAssignment(this);
+        workerProxy.waitWorker(this);
+        this.waitUntilDone();
       }
     });
   }
 
-  assignWorker(assignmentId) {
+  assignWorker(workerId) {
+    this.emit('requestContent', workerId);
+  }
+
+  waitUntilDone() {
+    /*
     mturk.getAssignment(assignmentId).then($ => {
       let result = parseGetAssignmentResult($);
-      if (result.Request.IsValid) {
-        this.emit('workerAssigned', new Assignment(result.Assignment));
+
+      if (result.AssignmentState) {
       } else {
-        // assignmentId === ASSIGNMENT_ID_NOT_AVAILABLE
-        this.emit('workerWatch');
       }
     });
+    */
+  }
+
+  resolve(workerId, result) {
+    this.emit('resolve', workerId, result);
   }
 
   setContent(content) {

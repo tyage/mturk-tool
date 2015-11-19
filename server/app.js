@@ -20,21 +20,21 @@ let hitWorker = {};
 
 io.on('connection', socket => {
   // requester wait until hit is assigned to worker
-  socket.on('waitAssignment', hitId => {
+  socket.on('waitWorker', hitId => {
     console.log(`requester waiting for ${hitId}`);
 
     hitRequester[hitId] = socket;
   });
 
   // worker need HIT content
-  socket.on('requestContent', (hitId, assignmentId) => {
-    console.log(`new worker is assigned to ${hitId} (assignmentId: ${assignmentId})`);
+  socket.on('requestContent', (hitId, workerId) => {
+    console.log(`new worker ${workerId} is assigned to ${hitId}`);
 
     let requester = hitRequester[hitId];
     hitWorker[hitId] = socket;
     if (requester) {
       // request HIT content to requester
-      requester.emit('requestContent', hitId, assignmentId);
+      requester.emit('requestContent', hitId, workerId);
     }
   });
 
@@ -45,6 +45,17 @@ io.on('connection', socket => {
     let worker = hitWorker[hitId];
     if (worker) {
       worker.emit('setContent', hitId, content);
+    }
+  });
+
+  // worker solve HIT
+  socket.on('solve', (hitId, workerId, result) => {
+    console.log(`worker ${workerId} solved ${hitId}`);
+
+    let requester = hitRequester[hitId];
+    hitWorker[hitId] = socket;
+    if (requester) {
+      requester.emit('solve', hitId, assignmentId, result);
     }
   });
 });

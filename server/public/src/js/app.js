@@ -14,3 +14,5 @@ socket.emit('requestContent', params.hitId, params.assignmentId);
 socket.on('setContent', (hitId, content) => {
   document.getElementById('content').innerHTML = content;
 });
+
+// TODO: if worker done, emit resolve
