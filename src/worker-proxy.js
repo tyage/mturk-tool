@@ -23,7 +23,7 @@ class WorkerProxy {
         return;
       }
 
-      hit.requestContent(workerId);
+      hit.assignWorker(workerId);
     });
 
     this.socket.on('solved', (hitId, workerId, result) => {
