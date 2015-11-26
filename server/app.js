@@ -55,7 +55,7 @@ io.on('connection', socket => {
     let requester = hitRequester[hitId];
     hitWorker[hitId] = socket;
     if (requester) {
-      requester.emit('solve', hitId, assignmentId, result);
+      requester.emit('solve', hitId, workerId, result);
     }
   });
 });

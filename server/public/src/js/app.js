@@ -9,7 +9,15 @@ window.location.search.slice(1).split('&').forEach(param => {
   let [key, value] = param.split('=');
   params[key] = value;
 });
-socket.emit('requestContent', params.hitId, params.assignmentId);
+
+// TODO: use cookie
+let workerId = window.localStorage.getItem('workerId');
+if (workerId === null) {
+  workerId = Math.random();
+  window.localStorage.setItem('workerId', workerId);
+}
+
+socket.emit('requestContent', params.hitId, workerId);
 
 socket.on('setContent', (hitId, content) => {
   document.getElementById('content').innerHTML = content;
