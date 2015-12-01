@@ -26,5 +26,5 @@ socket.on('setContent', (hitId, content) => {
 });
 
 mturk.onAnswer(form => {
-  socket.emit('answer', form.innerHTML);
+  socket.emit('answer', params.hitId, workerId, form.innerHTML);
 });
