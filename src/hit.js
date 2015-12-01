@@ -31,25 +31,13 @@ export default class HIT extends EventEmitter {
       this.params = params;
       if (params.HITId !== '') {
         workerProxy.waitWorker(this);
-        this.waitUntilDone();
       }
     });
   }
 
   assignWorker(workerId) {
+    console.log(`new worker ${workerId} is assigned to ${this.params.HITId}`);
     this.emit('requestContent', workerId);
-  }
-
-  waitUntilDone() {
-    /*
-    mturk.getAssignment(assignmentId).then($ => {
-      let result = parseGetAssignmentResult($);
-
-      if (result.AssignmentState) {
-      } else {
-      }
-    });
-    */
   }
 
   resolve(workerId, result) {

@@ -10,7 +10,6 @@ window.location.search.slice(1).split('&').forEach(param => {
   params[key] = value;
 });
 
-// TODO: use cookie
 let workerId = window.localStorage.getItem('workerId');
 if (workerId === null) {
   workerId = Math.random();

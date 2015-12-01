@@ -71,7 +71,7 @@ let onSolved = (hit, workerId, result) => {
   workers[workerId].nextQuestions = nextQuestions.length > 0 ? nextQuestions : questions;
 };
 
-let budget = 0.04;
+let budget = 0.02;
 let hitCost = 0.02;
 for (let i = 0; i < budget / hitCost; ++i) {
   let hit = mturkTool.createHIT({
