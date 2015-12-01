@@ -26,12 +26,12 @@ class WorkerProxy {
       hit.assignWorker(workerId);
     });
 
-    this.socket.on('solved', (hitId, workerId, result) => {
+    this.socket.on('answer', (hitId, workerId, result) => {
       if (hitId !== hit.params.HITId) {
         return;
       }
 
-      hit.resolve(workerId, result);
+      hit.answer(workerId, result);
     });
   }
 

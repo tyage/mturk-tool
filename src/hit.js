@@ -40,9 +40,9 @@ export default class HIT extends EventEmitter {
     this.emit('requestContent', workerId);
   }
 
-  resolve(workerId, result) {
-    console.log(`worker ${workerId} solved ${this.params.HITId} and result is: ${result}`);
-    this.emit('resolve', workerId, result);
+  answer(workerId, result) {
+    console.log(`worker ${workerId} answered ${this.params.HITId} and result is: ${result}`);
+    this.emit('answer', workerId, result);
   }
 
   setContent(content) {

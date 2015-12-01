@@ -1,8 +1,10 @@
 import _ from 'lodash';
 
+// functions to call when the platform is mturk
+
 let onSubmitCallbacks = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+let contentLoaded = () => {
   // send form to callback when the form is submitted
   let onSubmit = form => {
     _.forEach(onSubmitCallbacks, callback => {
@@ -15,10 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
       onSubmit(form);
     });
   });
-});
+};
+
+let onAnswer = callback => {
+  onSubmitCallbacks.push(callback);
+};
 
 export default {
-  onSubmit: callback => {
-    onSubmitCallbacks.push(callback);
-  }
+  onAnswer: onAnswer,
+  contentLoaded: contentLoaded
 };

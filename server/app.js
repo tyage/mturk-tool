@@ -48,13 +48,13 @@ io.on('connection', socket => {
     }
   });
 
-  // worker solve HIT
-  socket.on('solve', (hitId, workerId, result) => {
-    console.log(`worker ${workerId} solved ${hitId}`);
+  // worker answer HIT
+  socket.on('answer', (hitId, workerId, result) => {
+    console.log(`worker ${workerId} answered ${hitId}`);
 
     let requester = hitRequester[hitId];
     if (requester) {
-      requester.emit('solve', hitId, workerId, result);
+      requester.emit('answer', hitId, workerId, result);
     }
   });
 });

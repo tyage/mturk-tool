@@ -22,8 +22,9 @@ socket.emit('requestContent', params.hitId, workerId);
 
 socket.on('setContent', (hitId, content) => {
   document.getElementById('content').innerHTML = content;
+  mturk.contentLoaded();
 });
 
-mturk.onSubmit(form => {
-  socket.emit('resolve', form.innerHTML);
-})
+mturk.onAnswer(form => {
+  socket.emit('answer', form.innerHTML);
+});

@@ -36,7 +36,36 @@ let chooseOne = questions => {
   }
 };
 let generateContent = (leftQuestion, rightQuestion) => {
-  return `choose which one ${leftQuestion} ${rightQuestion}`;
+  return `
+<style>
+.question {
+  border: 1px solid black;
+  display: inline-block;
+  width: 400px;
+  height: 300px;
+}
+</style>
+<p>Choose only one question below and answer it</p>
+<form>
+  <div class="question">
+    <p>
+      <input type="radio" name="selection" value="${leftQuestion}" checked>
+      question: ${leftQuestion}
+    </p>
+    <textarea placeholder="write a answer" name="answer"></textarea>
+  </div>
+  <div class="question">
+    <p>
+      <input type="radio" name="selection" value="${rightQuestion}">
+      question: ${rightQuestion}
+    </p>
+    <textarea placeholder="write a answer" name="answer"></textarea>
+  </div>
+  <div>
+    <input type="submit" value="submit">
+  </div>
+</form>
+`;
 };
 
 let getContent = (hit, workerId) => {
@@ -55,7 +84,7 @@ let getContent = (hit, workerId) => {
   return generateContent(chooseOne(leftQuestions), chooseOne(rightQuestions));
 };
 
-let onSolved = (hit, workerId, result) => {
+let onAnswer = (hit, workerId, result) => {
   let worker = workers[workerId];
 
   // set next questions
@@ -81,7 +110,7 @@ for (let i = 0; i < budget / hitCost; ++i) {
     let content = getContent(hit, workerId);
     hit.setContent(content);
   });
-  hit.on('solved', (workerId, result) => {
-    onSolved(hit, workerId, result);
+  hit.on('answer', (workerId, result) => {
+    onAnswer(hit, workerId, result);
   });
 }
