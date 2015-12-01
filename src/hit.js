@@ -41,6 +41,7 @@ export default class HIT extends EventEmitter {
   }
 
   resolve(workerId, result) {
+    console.log(`worker ${workerId} solved ${this.params.HITId} and result is: ${result}`);
     this.emit('resolve', workerId, result);
   }
 

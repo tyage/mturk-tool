@@ -53,7 +53,6 @@ io.on('connection', socket => {
     console.log(`worker ${workerId} solved ${hitId}`);
 
     let requester = hitRequester[hitId];
-    hitWorker[hitId] = socket;
     if (requester) {
       requester.emit('solve', hitId, workerId, result);
     }

@@ -1,14 +1,16 @@
 import io from 'socket.io-client';
+import mturk from './mturk';
+import _ from 'lodash';
 
 let socket = io(window.requesterProxyServer);
 
 // decompose url parameter
 // https://www.mturkcontent.com/dynamic/hit?assignmentId=${assignmentId}&hitId=${hitId}
-let params = {};
-window.location.search.slice(1).split('&').forEach(param => {
+let params = _.reduce(window.location.search.slice(1).split('&'), (params, param) => {
   let [key, value] = param.split('=');
   params[key] = value;
-});
+  return params;
+}, {});
 
 let workerId = window.localStorage.getItem('workerId');
 if (workerId === null) {
@@ -22,4 +24,6 @@ socket.on('setContent', (hitId, content) => {
   document.getElementById('content').innerHTML = content;
 });
 
-// TODO: if worker done, emit resolve
+mturk.onSubmit(form => {
+  socket.emit('resolve', form.innerHTML);
+})
