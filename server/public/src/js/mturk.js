@@ -13,9 +13,9 @@ let contentLoaded = () => {
     });
   };
 
-  _.forEach(document.getElementsByTagName('form'), form => {
-    form.addEventListener('submit', () => {
-      onSubmit(form);
+  $('form').each(form => {
+    $(form).on('submit', () => {
+      onSubmit($(form).serialize());
     });
   });
 };

@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import mturk from './mturk';
 import _ from 'lodash';
+import $ from 'jquery';
 
 let socket = io(window.requesterProxyServer);
 
@@ -21,10 +22,10 @@ if (workerId === null) {
 socket.emit('requestContent', params.hitId, workerId);
 
 socket.on('setContent', (hitId, content) => {
-  document.getElementById('content').innerHTML = content;
+  $('content').html(content);
   mturk.contentLoaded();
 });
 
-mturk.onAnswer(form => {
-  socket.emit('answer', params.hitId, workerId, form.innerHTML);
+mturk.onAnswer(data => {
+  socket.emit('answer', params.hitId, workerId, data);
 });
