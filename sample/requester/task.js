@@ -49,17 +49,19 @@ let generateContent = (leftQuestion, rightQuestion) => {
 <form>
   <div class="question">
     <p>
-      <input type="radio" name="selection" value="${leftQuestion}" checked>
+      <input type="radio" name="selection" value="left" checked>
+      <input type="hidden" name="question-left" value="${leftQuestion}">
       question: ${leftQuestion}
     </p>
-    <textarea placeholder="write a answer" name="answer-${leftQuestion}"></textarea>
+    <textarea placeholder="write a answer" name="answer-left"></textarea>
   </div>
   <div class="question">
     <p>
-      <input type="radio" name="selection" value="${rightQuestion}">
+      <input type="radio" name="selection" value="right">
+      <input type="hidden" name="question-right" value="${rightQuestion}">
       question: ${rightQuestion}
     </p>
-    <textarea placeholder="write a answer" name="answer-${rightQuestion}"></textarea>
+    <textarea placeholder="write a answer" name="answer-right"></textarea>
   </div>
   <div>
     <input type="submit" value="submit">
