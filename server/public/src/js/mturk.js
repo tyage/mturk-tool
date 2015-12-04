@@ -15,7 +15,10 @@ let contentLoaded = () => {
 
   $('form').each((i, form) => {
     $(form).submit(() => {
-      onSubmit($(form).serialize());
+      let data = _.reduce($(form).serializeArray(), (data, param) => {
+        data[param.name] = param.value;
+      }, {});
+      onSubmit(data);
       return false;
     });
   });
