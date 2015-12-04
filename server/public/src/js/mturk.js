@@ -14,8 +14,9 @@ let contentLoaded = () => {
   };
 
   $('form').each(form => {
-    $(form).on('submit', () => {
+    $(form).submit(() => {
       onSubmit($(form).serialize());
+      return false;
     });
   });
 };
