@@ -13,7 +13,7 @@ let contentLoaded = () => {
     });
   };
 
-  $('form').each(form => {
+  $('form').each((i, form) => {
     $(form).submit(() => {
       onSubmit($(form).serialize());
       return false;
