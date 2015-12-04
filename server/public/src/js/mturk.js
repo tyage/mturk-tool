@@ -17,6 +17,7 @@ let contentLoaded = () => {
     $(form).submit(() => {
       let data = _.reduce($(form).serializeArray(), (data, param) => {
         data[param.name] = param.value;
+        return data;
       }, {});
       onSubmit(data);
       return false;
