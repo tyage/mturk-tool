@@ -88,7 +88,7 @@ let onAnswer = (hit, workerId, result) => {
   let worker = workers[workerId];
 
   // set next questions
-  let nextQuestions = result.selected === 'left' ? worker.leftQuestions : worker.rightQuestions;
+  let nextQuestions = result.selection === 'left' ? worker.leftQuestions : worker.rightQuestions;
 
   // update worker's state
   workers[workerId].results.push(result);
