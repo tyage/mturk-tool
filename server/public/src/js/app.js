@@ -22,7 +22,7 @@ if (workerId === null) {
 socket.emit('requestContent', params.hitId, workerId);
 
 socket.on('setContent', (hitId, content) => {
-  $('content').html(content);
+  $('#content').html(content);
   mturk.contentLoaded();
 });
 
