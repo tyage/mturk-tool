@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import $ from 'jquery';
 
 // functions to call when the platform is mturk
 
