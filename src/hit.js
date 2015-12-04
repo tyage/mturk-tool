@@ -41,7 +41,7 @@ export default class HIT extends EventEmitter {
   }
 
   answer(workerId, result) {
-    console.log(`worker ${workerId} answered ${this.params.HITId} and result is: ${result}`);
+    console.log(`worker ${workerId} answered ${this.params.HITId} and result is: ${JSON.stringify(result)}`);
     this.emit('answer', workerId, result);
   }
 
